@@ -2,7 +2,7 @@
 import sys
 import os
 from pyqode.core import api, icons
-from pyqode.qt import QtGui, QtCore, QtWidgets
+from pyqode.qt import QtGui, QtCore, QtWidgets, PYQT5_API, PYQT4_API, PYSIDE_API, PYSIDE2_API
 
 
 class CommentsMode(api.Mode):
@@ -20,16 +20,21 @@ class CommentsMode(api.Mode):
         """
         Called when the mode is activated/deactivated
         """
+        qt_api = os.environ['QT_API'].lower()
         if state:
             self.action.triggered.connect(self.comment)
             self.editor.add_action(self.action, sub_menu='Python')
-            if 'pyqt5' in os.environ['QT_API'].lower():
+            if qt_api in [PYQT5_API[0], PYSIDE2_API[0]]:
                 self.editor.key_pressed.connect(self.on_key_pressed)
+            else:
+                raise ImportError(__file__, self.__class__.__name__, sys._getframe().f_code.co_name)
         else:
             self.editor.remove_action(self.action, sub_menu='Python')
             self.action.triggered.disconnect(self.comment)
-            if 'pyqt5' in os.environ['QT_API'].lower():
+            if qt_api in [PYQT5_API[0], PYSIDE2_API[0]]:
                 self.editor.key_pressed.disconnect(self.on_key_pressed)
+            else:
+                raise ImportError(__file__, self.__class__.__name__, sys._getframe().f_code.co_name)
 
     def on_key_pressed(self, key_event):
         ctrl = (key_event.modifiers() & QtCore.Qt.ControlModifier ==
