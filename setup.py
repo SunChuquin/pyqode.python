@@ -57,9 +57,9 @@ def readme():
 requirements = [
     'pyqode.qt',
     'pyqode.core',
-    'jedi',
+    'jedi==0.11.1',
     'pycodestyle',
-    'pyflakes',
+    'pyflakes==1.6.0',
     'docutils'
 ]
 
