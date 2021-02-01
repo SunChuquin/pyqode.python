@@ -41,8 +41,8 @@ calltips, ...).
 Features:
 ---------
 
-* calltips mode (using `Jedi`_)
-* code completion provider (using `Jedi`_)
+* calltips mode (using `Jedi == 0.11.1`_)
+* code completion provider (using `Jedi == 0.11.1`_)
 * code folding mode
 * auto indent mode
 * on the fly code checkers (frosted (fork of PyFlakes), PEP8)
